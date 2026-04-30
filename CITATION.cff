@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this open-source reproduction package, please cite the paper and the freMTPL2 data sources."
+title: "freMTPL2 Scaling Laws for Actuarial Ratemaking"
+version: "0.1.0"
+date-released: "2026-04-30"
+authors:
+  - family-names: "Richman"
+    given-names: "Ronald"
+preferred-citation:
+  type: article
+  title: "Scaling Laws, Tabular Data and Actuarial Ratemaking Models"
+  authors:
+    - family-names: "Richman"
+      given-names: "Ronald"
+  url: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6073948"
+references:
+  - type: book
+    title: "Statistical Foundations of Actuarial Learning and its Applications"
+    authors:
+      - family-names: "Wüthrich"
+        given-names: "Mario V."
+      - family-names: "Merz"
+        given-names: "Michael"
+    year: 2023
+    url: "https://link.springer.com/book/10.1007/978-3-031-12409-9"
