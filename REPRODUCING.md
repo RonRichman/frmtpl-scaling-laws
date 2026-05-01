@@ -35,9 +35,9 @@ python scripts/make_figures.py \
 pytest
 ```
 
-The smoke run trains only GLM and FFN for one fraction, one seed, and one epoch.
-It is intended to catch installation or data-shape problems, not to reproduce
-the reference metrics.
+The smoke run trains only GLM and FFN for two small fractions, one seed, and one
+epoch. It is intended to catch installation or data-shape problems and verify
+that scaling-fit outputs are populated, not to reproduce the reference metrics.
 
 ## 4. Full Scaling Sweep
 

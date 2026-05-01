@@ -28,6 +28,19 @@ def _parse_thresholds(value: str | None):
     return [float(item.strip()) for item in value.split(",") if item.strip()]
 
 
+def _print_scaling_summary(scaling_df) -> None:
+    print(scaling_df.to_string(index=False))
+    if "alpha" not in scaling_df or scaling_df["alpha"].notna().all():
+        return
+
+    missing = ", ".join(scaling_df.loc[scaling_df["alpha"].isna(), "config_name"].astype(str))
+    print(
+        "Note: scaling-law alpha is undefined for "
+        f"{missing} because fewer than two valid training fractions were available. "
+        "Run without --smoke, or pass at least two --thresholds values, for fitted scaling exponents."
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-path", default=str(DEFAULT_DATA_PATH))
@@ -59,7 +72,7 @@ def main() -> None:
     )
     print(f"Wrote {len(run_df)} seed-level rows.")
     print(f"Wrote {len(ensemble_df)} ensemble rows.")
-    print(scaling_df.to_string(index=False))
+    _print_scaling_summary(scaling_df)
 
 
 if __name__ == "__main__":

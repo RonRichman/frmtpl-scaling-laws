@@ -34,6 +34,11 @@ python scripts/run_experiment.py --smoke
 python scripts/make_figures.py
 ```
 
+The smoke command runs GLM and FFN on two small training fractions, one seed,
+and one epoch. That is enough to populate `results/scaling_fits.csv` while
+keeping the run short. TensorFlow may print CUDA-driver messages on a CPU-only
+runtime; those messages are informational if training continues.
+
 If `data/FRMTPL.csv` is not present, regenerate it from the corrected RDA file:
 
 ```bash
@@ -62,9 +67,8 @@ python scripts/create_outcome_diagnostics.py --plots-only
 On Colab, open `notebooks/01_colab_frmtpl_scaling.ipynb` from GitHub. The first
 code cell clones `https://github.com/RonRichman/frmtpl-scaling-laws.git` into
 `/content/frmtpl-scaling-laws` if the package files are not already present and
-installs the local package with `pip install -e ".[dev]"`. While the repository
-is private, Colab may require GitHub access to open or clone it; once the
-repository is public, the badge works without additional credentials.
+installs the local package with `pip install -e ".[dev]"`. The public Colab
+badge works without additional GitHub credentials.
 
 ## Data
 
