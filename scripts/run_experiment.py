@@ -19,7 +19,6 @@ from frmtpl_scaling.config import (  # noqa: E402
     SMOKE_EPOCHS,
     SMOKE_THRESHOLDS,
 )
-from frmtpl_scaling.train import run_experiment  # noqa: E402
 
 
 def _parse_thresholds(value: str | None):
@@ -41,6 +40,24 @@ def _print_scaling_summary(scaling_df) -> None:
     )
 
 
+def _ensure_gpu_available(require_gpu: bool) -> None:
+    if not require_gpu:
+        return
+
+    import tensorflow as tf
+
+    gpus = tf.config.list_physical_devices("GPU")
+    if not gpus:
+        raise SystemExit(
+            "No TensorFlow GPU was detected. In Colab, choose "
+            "Runtime > Change runtime type > Hardware accelerator > GPU, "
+            "then restart the session and run the notebook again. "
+            "For an intentional CPU run, omit --require-gpu."
+        )
+
+    print("TensorFlow GPU devices: " + ", ".join(device.name for device in gpus), flush=True)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-path", default=str(DEFAULT_DATA_PATH))
@@ -50,7 +67,16 @@ def main() -> None:
     parser.add_argument("--reps", type=int, default=DEFAULT_REPS)
     parser.add_argument("--epochs", type=int, default=DEFAULT_EPOCHS)
     parser.add_argument("--smoke", action="store_true")
+    parser.add_argument(
+        "--require-gpu",
+        action="store_true",
+        help="Fail before training if TensorFlow cannot see a GPU.",
+    )
     args = parser.parse_args()
+
+    _ensure_gpu_available(args.require_gpu)
+
+    from frmtpl_scaling.train import run_experiment
 
     thresholds = _parse_thresholds(args.thresholds) or list(DEFAULT_THRESHOLDS)
     reps = args.reps

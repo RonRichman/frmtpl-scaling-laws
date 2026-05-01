@@ -49,6 +49,13 @@ python scripts/make_figures.py
 The full run trains five compact model families across six nested training
 fractions with three seeds per model/fraction.
 
+For Colab or other GPU-intended runs, add `--require-gpu` to stop immediately
+if TensorFlow cannot see a GPU:
+
+```bash
+python scripts/run_experiment.py --require-gpu
+```
+
 ## 5. Business Outcome Diagnostics
 
 ```bash

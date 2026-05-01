@@ -36,8 +36,7 @@ python scripts/make_figures.py
 
 The smoke command runs GLM and FFN on two small training fractions, one seed,
 and one epoch. That is enough to populate `results/scaling_fits.csv` while
-keeping the run short. TensorFlow may print CUDA-driver messages on a CPU-only
-runtime; those messages are informational if training continues.
+keeping the run short.
 
 If `data/FRMTPL.csv` is not present, regenerate it from the corrected RDA file:
 
@@ -68,7 +67,14 @@ On Colab, open `notebooks/01_colab_frmtpl_scaling.ipynb` from GitHub. The first
 code cell clones `https://github.com/RonRichman/frmtpl-scaling-laws.git` into
 `/content/frmtpl-scaling-laws` if the package files are not already present and
 installs the local package with `pip install -e ".[dev]"`. The public Colab
-badge works without additional GitHub credentials.
+badge works without additional GitHub credentials. The notebook requires a GPU
+runtime by default and stops before training if TensorFlow cannot see one.
+
+If Colab prints `Could not find cuda drivers` or `GPU will not be used`, the
+session is running on CPU. Choose `Runtime > Change runtime type > Hardware
+accelerator > GPU`, restart the session, and run the notebook again. For a
+short CPU-only smoke/debug run, set `REQUIRE_GPU = False` in the notebook or
+omit `--require-gpu` when using `scripts/run_experiment.py`.
 
 ## Data
 
